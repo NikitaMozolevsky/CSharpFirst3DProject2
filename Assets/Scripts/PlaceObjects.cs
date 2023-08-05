@@ -7,8 +7,34 @@ public class PlaceObjects : MonoBehaviour
 {
 
     public LayerMask layer;
+    public float rotateSpeed = 60.0f;
+
+    private void Start() //метод вызывается в момент создания объекта
+    { //метод распологает объект сразу же там, где находится мышка
+        PositionObject();
+    }
+
     private void Update()
-    { //остлеживание координат мыши относительно того куда смотрит камера сейчас
+    { 
+        PositionObject();
+        
+        if (Input.GetMouseButtonDown(1)) //отслеживание правой клавиши мыши
+
+        {
+            //запуск скрипта генерации машинок когда устанавливается дом
+            gameObject.GetComponent<CarAutogeneration>().enabled = true;
+            Destroy(gameObject.GetComponent<PlaceObjects>()); //удаление скрипта передвигающего дом
+        }
+        
+        //вращение объектов
+        if (Input.GetKey(KeyCode.LeftShift))
+            //вращение по оси Х
+            transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed);
+    }
+    
+    private void PositionObject()
+    {
+        //остлеживание координат мыши относительно того куда смотрит камера сейчас
         //нужно выпустить луч, и с чем этот луч соприкоснется
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -23,8 +49,5 @@ public class PlaceObjects : MonoBehaviour
             //изменение позиции дома
             transform.position = hit.point; //передвидение дома куда смотрит камера
         }
-        
-        if (Input.GetMouseButtonDown(1)) //отслеживание правой клавиши мыши
-            Destroy(gameObject.GetComponent<PlaceObjects>()); //удаление скрипта передвигающего дом
     }
 }
