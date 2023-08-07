@@ -21,6 +21,11 @@ public class CarAutogeneration : MonoBehaviour
         {
             //ожидание перед созданием первой машинки
             yield return new WaitForSeconds(timeBetweenCreation);
+
+            Vector3 pos = new Vector3(
+                transform.GetChild(0).position.x + UnityEngine.Random.Range(3f, 7f),
+                transform.GetChild(0).position.y,
+                transform.GetChild(0).position.z + + UnityEngine.Random.Range(3f, 7f));  
             //создание машины в условленной точке
             //скрипт устанавливается на ангаре
             Instantiate(car, transform.GetChild(0).position, Quaternion.identity);

@@ -22,9 +22,14 @@ public class PlaceObjects : MonoBehaviour
 
         {
             //запуск скрипта генерации машинок когда устанавливается дом
+            Component[] components = gameObject.GetComponents<Component>();
+            foreach (var component in components)
+            {
+                Console.WriteLine(component);
+            }
             gameObject.GetComponent<CarAutogeneration>().enabled = true;
             Destroy(gameObject.GetComponent<PlaceObjects>()); //удаление скрипта передвигающего дом
-        }
+        } 
         
         //вращение объектов
         if (Input.GetKey(KeyCode.LeftShift))
